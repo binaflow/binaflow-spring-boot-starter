@@ -1,0 +1,8 @@
+binaflow:
+  schema:
+    directory: ./src/main/resources
+  http-path: /binaflow
+  unhandled-exceptions:
+    fill-message: true
+    fill-exception-class: true
+    fill-stack-trace: true

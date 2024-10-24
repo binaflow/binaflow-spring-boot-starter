@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.github.binaflow.dto";
+
+/**
+ * Base message.
+ * All messages must have same fields.
+ */
+message BaseMessage {
+  // The field must have value same as it message type name, for example BaseMessage, PingRq, etc...
+  string messageType = 1;
+  // Unique message identifier. Needed for request-response correlation.
+  string messageId = 2;
+}
+
+/**
+ * Error message.
+ * Used for error responses.
+ * Implement RFC 9457 https://datatracker.ietf.org/doc/html/rfc9457#name-json-schema-for-http-proble
+ * Spring Error Responses also implement RFC 9457 https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-rest-exceptions.html
+ */
+message Error {
+  string messageType = 1;
+  string messageId = 2;
+  // Problem Details fields
+  string type = 3;
+  string title = 4;
+  int32 status = 5;
+  string detail = 6;
+  string instance = 7;
+}
+
+message Ping {
+  string messageType = 1;
+  string messageId = 2;
+}
+
+message Pong {
+  string messageType = 1;
+  string messageId = 2;
+}

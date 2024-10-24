@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "binaflow.schema.directory",
+      "type": "java.lang.String",
+      "description": "Directory where the protobuf schema files are located."
+    },
+    {
+      "name": "binaflow.http-path",
+      "type": "java.lang.String",
+      "description": "Http path for the WebSocket connection."
+    },
+    {
+      "name": "binaflow.unhandled-exceptions.fill-message",
+      "type": "java.lang.Boolean",
+      "description": "Fill the 'message' for response Error message when unhandled exceptions occurred."
+    },
+    {
+      "name": "binaflow.unhandled-exceptions.fill-exception-class",
+      "type": "java.lang.Boolean",
+      "description": "Fill the 'exception class' for response Error message when unhandled exceptions occurred."
+    },
+    {
+      "name": "binaflow.unhandled-exceptions.fill-stack-trace",
+      "type": "java.lang.Boolean",
+      "description": "Fill the 'stack trace' for response Error message when unhandled exceptions occurred."
+    }
+  ]
+}
