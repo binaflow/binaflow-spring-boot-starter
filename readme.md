@@ -11,6 +11,7 @@ For defining schema used protobuf.
 
 - Java 21+
 - Spring Boot 3+
+- Protoc 28.x
 
 ### How to use
 
@@ -31,13 +32,15 @@ For defining schema used protobuf.
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "dev.toliyansky.citiespicker.dto"; // define package for generated classes
+option java_package = "com.github.binaflow.citiespickerjavaspring.dto"; // define package for generated classes
 
 message GetCitiesRequest {
   string messageType = 1;
   string messageId = 2;
   double latitude = 3;
   double longitude = 4;
+  double maxDistance = 5;
+  int64 minPopulation = 6;
 }
 
 message GetCitiesResponse {
@@ -50,6 +53,7 @@ message City {
   string name = 1;
   double latitude = 2;
   double longitude = 3;
+  int64 population = 4;
 }
 ```
 
@@ -98,27 +102,18 @@ binaflow:
 5) Create a message controller:
 
 ```java
+// ...
+import com.github.binaflow.citiespickerjavaspring.dto.GetCitiesRequest;
+import com.github.binaflow.citiespickerjavaspring.dto.GetCitiesResponse;
+import com.github.binaflow.annotation.Controller;
+import com.github.binaflow.annotation.MessageMapping;
+
 @Controller
 public class CitiesController {
-
+    // ...
     @MessageMapping
     public GetCitiesResponse getCities(GetCitiesRequest request) {
-        return GetCitiesResponse.newBuilder()
-                .setMessageType("GetCitiesResponse")
-                .setMessageId(request.getMessageId())
-                .addAllCities(List.of(
-                        City.newBuilder()
-                                .setName("Moscow")
-                                .setLatitude(55.7558)
-                                .setLongitude(37.6176)
-                                .build(),
-                        City.newBuilder()
-                                .setName("Saint Petersburg")
-                                .setLatitude(59.9343)
-                                .setLongitude(30.3351)
-                                .build()
-                ))
-                .build();
+        return citiesService.getCities(request);
     }
 }
 ```

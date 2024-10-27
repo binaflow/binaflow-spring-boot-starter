@@ -59,9 +59,7 @@ public class BinaFlowService extends BinaryWebSocketHandler {
                 log.warn("Only StandardWebSocketSession supported, but used {}", webSocketSession.getClass());
                 return;
             }
-            log.debug("Message received. Length={}", message.getPayloadLength());
             var baseMessage = BaseMessage.parseFrom(message.getPayload());
-            log.trace("Message received. {}", baseMessage);
             messageId = baseMessage.getMessageId();
             if (!StringUtils.hasText(baseMessage.getMessageType())) {
                 log.warn("Message type is empty. MessageId {}", messageId);
@@ -77,6 +75,7 @@ public class BinaFlowService extends BinaryWebSocketHandler {
                 throw new MessageTypeNotFoundException(baseMessage.getMessageType());
             }
             var typedMessage = messageTypeMapping.parseFromMethod.invoke(null, message.getPayload());
+            log.trace("Received message: {}", typedMessage);
             Object response = null;
             var methodParameterCount = messageTypeMapping.handlerMethod.getParameterCount();
             if (methodParameterCount == 1) {
@@ -262,6 +261,7 @@ public class BinaFlowService extends BinaryWebSocketHandler {
                 // if users code set wrong message type, let's fix it for him
                 message = message.toBuilder().setField(messageTypeFieldDescriptor, messageTypeSimpleClassName).build();
             }
+            log.trace("Responding with message. {}", message);
             webSocketSession.sendMessage(new BinaryMessage(message.toByteArray()));
         } catch (IOException e) {
             throw new BinaFlowException("Error while send response", e);
