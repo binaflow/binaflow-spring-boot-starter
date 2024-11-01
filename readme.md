@@ -11,7 +11,7 @@ For defining schema used protobuf.
 
 - Java 21+
 - Spring Boot 3+
-- Protoc 28.x
+- Protoc 28.3
 
 ### How to use
 
@@ -22,7 +22,7 @@ For defining schema used protobuf.
 <dependency>
     <groupId>io.github.binaflow</groupId>
     <artifactId>binaflow-spring-boot-starter</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
