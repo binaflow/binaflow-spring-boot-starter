@@ -20,7 +20,7 @@ For defining schema used protobuf.
 ```xml
 
 <dependency>
-    <groupId>com.github.binaflow</groupId>
+    <groupId>io.github.binaflow</groupId>
     <artifactId>binaflow-spring-boot-starter</artifactId>
     <version>0.0.1</version>
 </dependency>
@@ -32,7 +32,7 @@ For defining schema used protobuf.
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.github.binaflow.citiespickerjavaspring.dto"; // define package for generated classes
+option java_package = "io.github.binaflow.citiespickerjavaspring.dto"; // define package for generated classes
 
 message GetCitiesRequest {
   string messageType = 1;
@@ -103,10 +103,11 @@ binaflow:
 
 ```java
 // ...
-import com.github.binaflow.citiespickerjavaspring.dto.GetCitiesRequest;
-import com.github.binaflow.citiespickerjavaspring.dto.GetCitiesResponse;
-import com.github.binaflow.annotation.Controller;
-import com.github.binaflow.annotation.MessageMapping;
+
+import io.github.binaflow.citiespickerjavaspring.dto.GetCitiesRequest;
+import io.github.binaflow.citiespickerjavaspring.dto.GetCitiesResponse;
+import io.github.binaflow.annotation.Controller;
+import io.github.binaflow.annotation.MessageMapping;
 
 @Controller
 public class CitiesController {

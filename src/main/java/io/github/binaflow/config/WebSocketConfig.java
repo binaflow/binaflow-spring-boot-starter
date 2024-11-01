@@ -1,7 +1,7 @@
-package com.github.binaflow.config;
+package io.github.binaflow.config;
 
-import com.github.binaflow.BinaFlowProperties;
-import com.github.binaflow.service.BinaFlowService;
+import io.github.binaflow.BinaFlowProperties;
+import io.github.binaflow.service.BinaFlowService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;

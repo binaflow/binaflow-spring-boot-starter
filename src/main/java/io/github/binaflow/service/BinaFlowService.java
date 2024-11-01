@@ -1,16 +1,16 @@
-package com.github.binaflow.service;
+package io.github.binaflow.service;
 
-import com.github.binaflow.dto.BaseMessage;
-import com.github.binaflow.dto.Ping;
+import io.github.binaflow.dto.BaseMessage;
+import io.github.binaflow.dto.Ping;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
-import com.github.binaflow.annotation.Controller;
-import com.github.binaflow.annotation.MessageMapping;
-import com.github.binaflow.BinaFlowProperties;
-import com.github.binaflow.exception.EmptyMessageTypeException;
-import com.github.binaflow.exception.MessageTypeNotFoundException;
-import com.github.binaflow.exception.BinaFlowException;
-import com.github.binaflow.util.StackTraceUtils;
+import io.github.binaflow.annotation.Controller;
+import io.github.binaflow.annotation.MessageMapping;
+import io.github.binaflow.BinaFlowProperties;
+import io.github.binaflow.exception.EmptyMessageTypeException;
+import io.github.binaflow.exception.MessageTypeNotFoundException;
+import io.github.binaflow.exception.BinaFlowException;
+import io.github.binaflow.util.StackTraceUtils;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

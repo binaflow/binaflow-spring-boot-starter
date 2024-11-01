@@ -1,6 +1,6 @@
-package com.github.binaflow.exception;
+package io.github.binaflow.exception;
 
-import com.github.binaflow.dto.Error;
+import io.github.binaflow.dto.Error;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.NestedRuntimeException;

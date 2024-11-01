@@ -1,4 +1,4 @@
-package com.github.binaflow.annotation;
+package io.github.binaflow.annotation;
 
 import org.springframework.stereotype.Component;
 

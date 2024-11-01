@@ -1,8 +1,8 @@
-package com.github.binaflow.config;
+package io.github.binaflow.config;
 
-import com.github.binaflow.BinaFlowProperties;
-import com.github.binaflow.controller.PingController;
-import com.github.binaflow.service.BinaFlowService;
+import io.github.binaflow.BinaFlowProperties;
+import io.github.binaflow.controller.PingController;
+import io.github.binaflow.service.BinaFlowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

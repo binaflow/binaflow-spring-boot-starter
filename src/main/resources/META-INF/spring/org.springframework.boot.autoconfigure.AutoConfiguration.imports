@@ -1,2 +1,2 @@
-com.github.binaflow.config.BinaFlowAutoConfiguration
-com.github.binaflow.config.WebSocketConfig
+io.github.binaflow.config.BinaFlowAutoConfiguration
+io.github.binaflow.config.WebSocketConfig

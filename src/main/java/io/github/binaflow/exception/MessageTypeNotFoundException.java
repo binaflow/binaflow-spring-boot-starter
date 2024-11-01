@@ -1,4 +1,4 @@
-package com.github.binaflow.exception;
+package io.github.binaflow.exception;
 
 /**
  * Exception thrown when message type is not found in the message mapping.

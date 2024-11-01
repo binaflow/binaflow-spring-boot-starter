@@ -1,4 +1,4 @@
-package com.github.binaflow.util;
+package io.github.binaflow.util;
 
 public class StackTraceUtils {
     public static String toString(StackTraceElement[] stackTraceElements) {

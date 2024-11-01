@@ -1,4 +1,4 @@
-/src/main/java/com/github/binaflow/dto
+/src/main/java/io/github/binaflow/dto
 target/
 !**/src/main/**/target/
 !**/src/test/**/target/

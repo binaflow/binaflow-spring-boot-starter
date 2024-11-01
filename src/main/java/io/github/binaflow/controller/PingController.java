@@ -1,9 +1,9 @@
-package com.github.binaflow.controller;
+package io.github.binaflow.controller;
 
-import com.github.binaflow.annotation.Controller;
-import com.github.binaflow.annotation.MessageMapping;
-import com.github.binaflow.dto.Ping;
-import com.github.binaflow.dto.Pong;
+import io.github.binaflow.annotation.Controller;
+import io.github.binaflow.annotation.MessageMapping;
+import io.github.binaflow.dto.Ping;
+import io.github.binaflow.dto.Pong;
 
 /**
  * Controller for handling Ping messages.
