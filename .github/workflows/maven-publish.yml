@@ -23,6 +23,8 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         server-id: ossrh
+        server-username: ${{ secrets.OSSRH_USERNAME }}
+        server-password: ${{ secrets.OSSRH_TOKEN }}
 
     - name: Install Protoc
       uses: arduino/setup-protoc@v3
