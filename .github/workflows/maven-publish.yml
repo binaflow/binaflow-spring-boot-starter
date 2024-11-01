@@ -31,7 +31,7 @@ jobs:
     - name: Import GPG Key
       run: |
         echo "${{ secrets.GPG_PUBLIC_KEY }}" | gpg --import
-        echo "${{ secrets.GPG_SECRET_KEY }}" | gpg --import --batch --yes
+        echo "${{ secrets.GPG_SECRET_KEY }}" | gpg --import --no-tty --batch --yes
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
