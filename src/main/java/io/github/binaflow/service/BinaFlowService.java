@@ -11,12 +11,10 @@ import io.github.binaflow.exception.EmptyMessageTypeException;
 import io.github.binaflow.exception.MessageTypeNotFoundException;
 import io.github.binaflow.exception.BinaFlowException;
 import io.github.binaflow.util.StackTraceUtils;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
+import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -41,17 +39,22 @@ import java.util.regex.Pattern;
  * - Loading controllers and their methods.<br>
  * - Handling incoming messages.
  */
-@Slf4j
-@RequiredArgsConstructor
 public class BinaFlowService extends BinaryWebSocketHandler {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BinaFlowService.class);
 
     private final BinaFlowProperties properties;
     private final ApplicationContext applicationContext;
     private final Pattern messageTypePattern = Pattern.compile(".*message\\s+([a-zA-Z][a-zA-Z\\d]*)\\s*\\{.*");
     private final Map<String, MessageTypeMapping> messageTypeMappings = new HashMap<>(); // Key - simple class name
 
+    public BinaFlowService(BinaFlowProperties properties, ApplicationContext applicationContext) {
+        this.properties = properties;
+        this.applicationContext = applicationContext;
+    }
+
     @Override
-    protected void handleBinaryMessage(WebSocketSession webSocketSession, BinaryMessage message) {
+    protected void handleBinaryMessage(@NonNull WebSocketSession webSocketSession, @NonNull BinaryMessage message) {
         String messageId = null;
         String messageType = "Undefined";
         try {
@@ -94,12 +97,12 @@ public class BinaFlowService extends BinaryWebSocketHandler {
             var binaflowException = new BinaFlowException("Unhandled exception.", e);
             binaflowException.setMessageId(messageId);
             var problemDetail = binaflowException.getProblemDetail();
-            problemDetail.setTitle(properties.getUnhandledExceptions().getFillMessage() ? e.getMessage() : "Unhandled exception");
+            problemDetail.setTitle(properties.unhandledExceptions().fillMessage() ? e.getMessage() : "Unhandled exception");
             problemDetail.setDetail("Unhandled exception" +
-                                    (properties.getUnhandledExceptions().getFillMessage() ? "\nMessage: " + e.getMessage() : "") +
-                                    (properties.getUnhandledExceptions().getFillExceptionClass() ? "\nException class: " + e.getClass() : "") +
-                                    (properties.getUnhandledExceptions().getFillStackTrace() ? "\nStack trace: " + StackTraceUtils.toString(e.getStackTrace()) : ""));
-            problemDetail.setInstance(URI.create(properties.getHttpPath() + "#" + messageType));
+                                    (properties.unhandledExceptions().fillMessage() ? "\nMessage: " + e.getMessage() : "") +
+                                    (properties.unhandledExceptions().fillExceptionClass() ? "\nException class: " + e.getClass() : "") +
+                                    (properties.unhandledExceptions().fillStackTrace() ? "\nStack trace: " + StackTraceUtils.toString(e.getStackTrace()) : ""));
+            problemDetail.setInstance(URI.create(properties.httpPath() + "#" + messageType));
             respondWithError(binaflowException, webSocketSession);
         }
     }
@@ -118,12 +121,12 @@ public class BinaFlowService extends BinaryWebSocketHandler {
      */
     private void loadMessageTypesFromProtoSchemaFiles() {
         try {
-            messageTypeMappings.put("Ping", new MessageTypeMapping(Ping.class.getName(), null, null, Ping.class.getMethod("parseFrom", ByteBuffer.class)));
+            messageTypeMappings.put("Ping", new MessageTypeMapping(Ping.class.getName(), Ping.class.getMethod("parseFrom", ByteBuffer.class)));
         } catch (NoSuchMethodException e) {
             // Not possible situation. Just catch it to avoid compilation error.
             throw new RuntimeException(e);
         }
-        var schemaDirectory = properties.getSchema().getDirectory();
+        var schemaDirectory = properties.schema().directory();
         if (StringUtils.hasText(schemaDirectory)) {
             try {
                 var path = Path.of(schemaDirectory);
@@ -151,7 +154,7 @@ public class BinaFlowService extends BinaryWebSocketHandler {
                             if (matcher.find()) {
                                 var messageType = matcher.group(1);
                                 var className = dtoJavaPackage + "." + messageType;
-                                messageTypeMappings.put(messageType, new MessageTypeMapping(className, null, null, null));
+                                messageTypeMappings.put(messageType, new MessageTypeMapping(className));
                             }
                         }
                     }
@@ -276,11 +279,19 @@ public class BinaFlowService extends BinaryWebSocketHandler {
         }
     }
 
-    @AllArgsConstructor
     static class MessageTypeMapping {
-        private String className; // Package + class name
+        private final String className; // Package + class name
         private Object bean; // Controller
         private Method handlerMethod; // Handler method in controller
         private Method parseFromMethod; // 'parseFrom' method in java class for message type
+
+        public MessageTypeMapping(String className, Method parseFromMethod) {
+            this.className = className;
+            this.parseFromMethod = parseFromMethod;
+        }
+
+        public MessageTypeMapping(String className) {
+            this.className = className;
+        }
     }
 }

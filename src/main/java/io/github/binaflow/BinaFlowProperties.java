@@ -1,24 +1,13 @@
 package io.github.binaflow;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Data
 @ConfigurationProperties(prefix = "binaflow")
-public class BinaFlowProperties {
-    private Schema schema;
-    private String httpPath;
-    private UnhandledExceptions unhandledExceptions;
+public record BinaFlowProperties(Schema schema, String httpPath, UnhandledExceptions unhandledExceptions) {
 
-    @Data
-    public static class Schema {
-        private String directory;
+    public record Schema(String directory) {
     }
 
-    @Data
-    public static class UnhandledExceptions {
-        private Boolean fillMessage;
-        private Boolean fillExceptionClass;
-        private Boolean fillStackTrace;
+    public record UnhandledExceptions(Boolean fillMessage, Boolean fillExceptionClass, Boolean fillStackTrace) {
     }
 }

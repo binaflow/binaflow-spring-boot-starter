@@ -1,8 +1,6 @@
 package io.github.binaflow.exception;
 
 import io.github.binaflow.dto.Error;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.ProblemDetail;
 
@@ -11,11 +9,9 @@ import org.springframework.http.ProblemDetail;
  * <p>Any exception threw inside method annotated @MessageMapping and inherited from BinaFlowException will be intercepted by BinaFlowService and Error message will be sent to client.
  * Error message will be constructed from ProblemDetail object.
  */
-@Getter
 public class BinaFlowException extends NestedRuntimeException {
 
     protected ProblemDetail problemDetail;
-    @Setter
     protected String messageId;
 
     public BinaFlowException(String msg) {
@@ -38,5 +34,13 @@ public class BinaFlowException extends NestedRuntimeException {
                 .setDetail(problemDetail.getDetail())
                 .setInstance(String.valueOf(problemDetail.getInstance()))
                 .build();
+    }
+
+    public ProblemDetail getProblemDetail() {
+        return problemDetail;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 }

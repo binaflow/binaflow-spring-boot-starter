@@ -25,7 +25,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(binaFlowService, properties.getHttpPath());
+        registry.addHandler(binaFlowService, properties.httpPath());
     }
 
 }
